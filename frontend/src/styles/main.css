@@ -1,0 +1,6 @@
+/* Import main design */
+@import url('./design/main_design.css');
+
+/* Import auth page design */
+@import url('components/auth/auth.css');
+@import url('components/auth/helper.css');
