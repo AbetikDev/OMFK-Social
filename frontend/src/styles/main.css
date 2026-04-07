@@ -2,5 +2,25 @@
 @import url('./design/main_design.css');
 
 /* Import auth page design */
-@import url('components/auth/auth.css');
-@import url('components/auth/helper.css');
+@import url('./components/auth/auth.css');
+@import url('./components/auth/helper.css');
+@import url('./components/preloader/preloader.css');
+@import url('./components/404/404.css');
+@import url('./components/ui-notification/ui-notification.css');
+
+html,
+body,
+#root {
+	min-height: 100%;
+}
+
+body {
+	margin: 0;
+	background:
+		radial-gradient(circle at top, rgba(245, 181, 57, 0.12), transparent 34%),
+		linear-gradient(180deg, #f3efe8 0%, #ece2d5 100%);
+}
+
+.app-container {
+	min-height: 100vh;
+}

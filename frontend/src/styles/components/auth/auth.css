@@ -107,7 +107,26 @@
     transform: scale(0.98);
 }
 
-.register-link {
+.btn-primary:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.form-message {
+    margin: 4px 0 0;
+    font-size: 13px;
+}
+
+.form-message-error {
+    color: #b42318;
+}
+
+.form-message-success {
+    color: #067647;
+}
+
+.register-link,
+.login-link {
     text-align: center;
     font-size: 14px;
     color: var(--secondary_text_color, #666666);
@@ -116,7 +135,8 @@
     transition: color 0.2s ease;
 }
 
-.register-link:hover {
+.register-link:hover,
+.login-link:hover {
     color: #222222;
 }
 
