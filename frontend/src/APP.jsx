@@ -4,50 +4,48 @@ import AppRoutes from './routes/app-routes';
 import Preloader from './modules/preloader/preloader';
 import UiNotificationHost from './components/ui-notification/ui-notification-host';
 
-const PRELOADER_APPEAR_DELAY_MS = 120;
-const PRELOADER_EXIT_MS = 560;
+const PRELOADER_MIN_VISIBLE_MS = 700;
+const PRELOADER_EXIT_MS = 420;
 
 const App = () => {
-    const [showPreloader, setShowPreloader] = useState(false);
+    const [showPreloader, setShowPreloader] = useState(true);
     const [isPreloaderClosing, setIsPreloaderClosing] = useState(false);
-    const isPreloaderVisibleRef = useRef(false);
+    const isClosingRef = useRef(false);
 
     useEffect(() => {
-        isPreloaderVisibleRef.current = showPreloader;
-    }, [showPreloader]);
-
-    useEffect(() => {
-        if (typeof window === 'undefined' || document.readyState === 'complete') {
+        if (typeof window === 'undefined') {
             return undefined;
         }
 
-        let appearTimer = window.setTimeout(() => {
-            setShowPreloader(true);
-        }, PRELOADER_APPEAR_DELAY_MS);
-
-        let hidePreloaderTimer = null;
+        const startTime = Date.now();
+        let hideTimer = null;
 
         const closePreloader = () => {
-            window.clearTimeout(appearTimer);
-
-            if (!isPreloaderVisibleRef.current) {
+            if (isClosingRef.current) {
                 return;
             }
 
-            setIsPreloaderClosing(true);
-            hidePreloaderTimer = window.setTimeout(() => {
-                setShowPreloader(false);
-                setIsPreloaderClosing(false);
-            }, PRELOADER_EXIT_MS);
+            isClosingRef.current = true;
+            const elapsed = Date.now() - startTime;
+            const remainingVisibleTime = Math.max(PRELOADER_MIN_VISIBLE_MS - elapsed, 0);
+
+            window.setTimeout(() => {
+                setIsPreloaderClosing(true);
+                hideTimer = window.setTimeout(() => {
+                    setShowPreloader(false);
+                }, PRELOADER_EXIT_MS);
+            }, remainingVisibleTime);
         };
 
-        window.addEventListener('load', closePreloader, { once: true });
+        if (document.readyState === 'complete') {
+            closePreloader();
+        } else {
+            window.addEventListener('load', closePreloader, { once: true });
+        }
 
         return () => {
-            window.clearTimeout(appearTimer);
-
-            if (hidePreloaderTimer) {
-                clearTimeout(hidePreloaderTimer);
+            if (hideTimer) {
+                window.clearTimeout(hideTimer);
             }
 
             window.removeEventListener('load', closePreloader);

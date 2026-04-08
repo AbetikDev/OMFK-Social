@@ -1,15 +1,66 @@
-:root {
-    --background_color: #f3efe8;
-    
-    --border_color: rgb(56, 56, 56);
+﻿:root {
+    --font-family-base: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 
-    --text_color: black;
-    --secondary_text_color: rgb(56, 56, 56);
+    --color-bg-base: #f3efe8;
+    --color-bg-surface: #fffdf8;
+    --color-bg-surface-soft: rgba(255, 252, 247, 0.86);
+    --color-bg-input: #f9f6f0;
+    --color-bg-notification-error: rgba(35, 37, 49, 0.96);
+    --color-bg-notification-success: rgba(31, 43, 36, 0.96);
+
+    --color-border-base: #d8d0c4;
+    --color-border-strong: rgb(56, 56, 56);
+    --color-border-light: rgba(255, 255, 255, 0.12);
+
+    --color-text-base: #221a14;
+    --color-text-muted: #5e5147;
+    --color-text-soft: #7a6c61;
+    --color-text-inverse: #ffffff;
+
+    --color-accent: #9b5d20;
+    --color-accent-strong: #8b2e14;
+    --color-accent-warm: #c8562a;
+    --color-focus: #6366f1;
+    --color-focus-soft: rgba(99, 102, 241, 0.15);
+
+    --color-success: #8cf2b0;
+    --color-success-text: #067647;
+    --color-error: #ff5b5b;
+    --color-error-text: #b42318;
+
+    --gradient-page:
+        radial-gradient(circle at top, rgba(245, 181, 57, 0.12), transparent 34%),
+        linear-gradient(180deg, #f3efe8 0%, #ece2d5 100%);
+    --gradient-button: linear-gradient(135deg, var(--color-accent-strong) 0%, var(--color-accent-warm) 100%);
+
+    --radius-sm: 10px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-2xl: 28px;
+    --radius-pill: 999px;
+
+    --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --shadow-panel: 0 24px 80px rgba(84, 49, 14, 0.12);
+    --shadow-button: 0 18px 40px rgba(139, 46, 20, 0.22);
+    --shadow-button-hover: 0 22px 44px rgba(139, 46, 20, 0.28);
+    --shadow-notification: 0 18px 50px rgba(47, 24, 41, 0.18);
+
+    --transition-fast: 0.18s ease;
+    --transition-base: 0.2s ease;
+    --transition-slow: 160ms ease;
+
+    --backdrop-blur: blur(10px);
+
+    --background_color: var(--color-bg-base);
+    --border_color: var(--color-border-strong);
+    --text_color: var(--color-text-base);
+    --secondary_text_color: var(--color-text-muted);
 }
 
-body,html {
+html,
+body {
     background-color: var(--background_color);
     color: var(--text_color);
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-
+    font-family: var(--font-family-base);
 }

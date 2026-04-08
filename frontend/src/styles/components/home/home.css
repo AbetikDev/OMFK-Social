@@ -1,0 +1,57 @@
+﻿.home-page {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 32px;
+}
+
+.home-hero {
+    width: min(720px, 100%);
+    padding: 40px;
+    border-radius: var(--radius-2xl);
+    background: var(--color-bg-surface-soft);
+    box-shadow: var(--shadow-panel);
+    backdrop-filter: var(--backdrop-blur);
+}
+
+.home-kicker {
+    margin: 0 0 12px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+}
+
+.home-title {
+    margin: 0 0 16px;
+    font-size: clamp(32px, 5vw, 56px);
+    line-height: 1;
+    color: var(--color-text-base);
+}
+
+.home-description {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+}
+
+.home-logout-button {
+    margin-top: 28px;
+    border: 0;
+    border-radius: var(--radius-pill);
+    padding: 14px 22px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-text-inverse);
+    background: var(--gradient-button);
+    cursor: pointer;
+    transition: transform var(--transition-slow), box-shadow var(--transition-slow);
+    box-shadow: var(--shadow-button);
+}
+
+.home-logout-button:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-button-hover);
+}

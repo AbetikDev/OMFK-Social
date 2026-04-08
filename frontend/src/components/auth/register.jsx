@@ -1,36 +1,37 @@
 ﻿import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../routes/routes';
-import { loadNotificationModule, loadRegisterModule } from './runtime-modules';
+import { register } from '../../services/auth';
+import { notifySuccess, notifyTryAgain } from '../../utils/notifications';
 
 const Register = () => {
     const [pending, setPending] = useState(false);
+    const navigate = useNavigate();
+
     useEffect(() => {
-        document.title = "Реєстрація | ОМФK";
+        document.title = 'Реєстрація | ОМФK';
     }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
+        const form = event.currentTarget;
+        const formData = new FormData(form);
         const email = String(formData.get('email') || '').trim();
         const username = String(formData.get('username') || '').trim();
         const password = String(formData.get('password') || '');
 
         if (!email || !username || !password) {
-            const { notifyTryAgain } = await loadNotificationModule();
             notifyTryAgain('Заповніть усі поля.');
             return;
         }
 
         setPending(true);
         try {
-            const { registerMethod } = await loadRegisterModule();
-            const { notifySuccess } = await loadNotificationModule();
-            await registerMethod({ email, username, password });
+            await register({ email, username, password });
             notifySuccess('Реєстрація успішна. Тепер увійдіть у систему.');
-            event.currentTarget.reset();
+            form.reset();
+            navigate(ROUTES.HOME, { replace: true });
         } catch (error) {
-            const { notifyTryAgain } = await loadNotificationModule();
             if (error?.name === 'ApiError') {
                 notifyTryAgain(error.message);
             } else {

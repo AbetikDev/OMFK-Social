@@ -1,35 +1,36 @@
 ﻿import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../routes/routes';
-import { loadLoginModule, loadNotificationModule } from './runtime-modules';
+import { login } from '../../services/auth';
+import { notifySuccess, notifyTryAgain } from '../../utils/notifications';
 
 const Login = () => {
     const [pending, setPending] = useState(false);
+    const navigate = useNavigate();
+
     useEffect(() => {
-        document.title = "Авторизація | ОМФK";
+        document.title = 'Авторизація | ОМФK';
     }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        const login = String(formData.get('login') || '').trim();
+        const form = event.currentTarget;
+        const formData = new FormData(form);
+        const loginValue = String(formData.get('login') || '').trim();
         const password = String(formData.get('password') || '');
 
-        if (!login || !password) {
-            const { notifyTryAgain } = await loadNotificationModule();
+        if (!loginValue || !password) {
             notifyTryAgain('Вкажіть логін і пароль.');
             return;
         }
 
         setPending(true);
         try {
-            const { loginMethod } = await loadLoginModule();
-            const { notifySuccess } = await loadNotificationModule();
-            await loginMethod({ login, password });
+            await login({ login: loginValue, password });
             notifySuccess('Вхід успішний. Можна відкривати захищені сторінки.');
-            event.currentTarget.reset();
+            form.reset();
+            navigate(ROUTES.HOME, { replace: true });
         } catch (error) {
-            const { notifyTryAgain } = await loadNotificationModule();
             if (error?.name === 'ApiError') {
                 notifyTryAgain(error.message);
             } else {
